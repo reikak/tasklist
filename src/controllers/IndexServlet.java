@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Message;
+import models.Tasklist;
 import utils.DBUtil;
 
 /**
@@ -41,26 +41,26 @@ public class IndexServlet extends HttpServlet {
         } catch(NumberFormatException e) {}
 
         // 最大件数と開始位置を指定してメッセージを取得
-        List<Message> messages = em.createNamedQuery("getAllMessages", Message.class)
+        List<Tasklist> tasks = em.createNamedQuery("getAllTasks", Tasklist.class)
                                    .setFirstResult(15 * (page - 1))
                                    .setMaxResults(15)
                                    .getResultList();
 
         // 全件数を取得
-        long messages_count = (long)em.createNamedQuery("getMessagesCount", Long.class)
+        long task_count = (long)em.createNamedQuery("getTaskCount", Long.class)
                                       .getSingleResult();
 
         em.close();
 
-        request.setAttribute("messages", messages);
-        request.setAttribute("messages_count", messages_count);     // 全件数
+        request.setAttribute("tasks", tasks);
+        request.setAttribute("task_count", task_count);     // 全件数
         request.setAttribute("page", page);
         if(request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/messages/index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/index.jsp");
         rd.forward(request, response);
     }
 }

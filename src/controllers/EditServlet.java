@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Message;
+import models.Tasklist;
 import utils.DBUtil;
 
 /**
@@ -34,7 +34,7 @@ public class EditServlet extends HttpServlet {
         EntityManager em = DBUtil.createEntityManager();
 
         // 該当のIDのメッセージ1件のみをデータベースから取得
-        Message m = em.find(Message.class, Integer.parseInt(request.getParameter("id")));
+        Tasklist m = em.find(Tasklist.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();
 

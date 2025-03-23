@@ -40,7 +40,7 @@ public class IndexServlet extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         } catch(NumberFormatException e) {}
 
-        // 最大件数と開始位置を指定してメッセージを取得
+        // 最大件数と開始位置を指定してタスクを取得
         List<Tasklist> tasks = em.createNamedQuery("getAllTasks", Tasklist.class)
                                    .setFirstResult(15 * (page - 1))
                                    .setMaxResults(15)
